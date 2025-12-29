@@ -1,19 +1,24 @@
-POST http://localhost:9000/register HTTP/1.1
+POST /register HTTP/1.1
+Host: localhost:9000
 Content-Type: application/json
+
 {
-    "username"
-    "password"
-    "email"
-    "name"
+  "username": "Himanshu",
+  "password": "12345678",
+  "email": "himanshu@gmail.com",
+  "name": "himanshu"
 }
 
 ###
-POST http://localhost:9000/login HTTP/1.1
+POST /login HTTP/1.1
+Host: localhost:9000
 Content-Type: application/json
+
 {
-    "email"
-    "password"
+  "email": "himanshu@gmail.com",
+  "password": "12345678"
 }
+
 
 ###
 GET http://localhost:9000/get_user_and_profile
