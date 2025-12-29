@@ -16,7 +16,7 @@ const PostSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    upfdatedAt: {
+    updatedAt: {
         type: Date,
         default: Date.now
     },
