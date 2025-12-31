@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { loginUser, registerUser } from "../../action/authAction/index.js"
+import { getAboutUser, getAllUsers, loginUser, registerUser } from "../../action/authAction/index.js"
 
 const initialState = {
     user: [],
@@ -8,9 +8,12 @@ const initialState = {
     isLoading: false,
     loggedIn: false,
     message: "",
+    isTokenThere: false,
     profileFetched: false,
     connections: [],
-    connectionRequest: []
+    connectionRequest: [],
+    all_users: [],
+    all_profiles_fetched: false
 }
 
 const authSlice = createSlice({
@@ -20,6 +23,15 @@ const authSlice = createSlice({
         reset: () => initialState,
         handleLoginUser: (state) => {
             state.message='hello'
+        },
+        emptyMessage: (state) => {
+            state.message=''
+        },
+        setTokenIsThere: (state) => {
+            state.isTokenThere = true;
+        },
+        setTokenIsNotThere: (state) => {
+            state.isTokenThere = false;
         }
     },
 
@@ -27,14 +39,18 @@ const authSlice = createSlice({
         builder
             .addCase(loginUser.pending, (state) => {
                 state.isLoading = true;
-                state.message='Knocking the door...'
+                state.message = {
+                    message: 'Knocking the door...'
+                }
             })
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isError = false;
                 state.isSuccess = true;
                 state.loggedIn = true;
-                state.message='Login is successful'
+                state.message = {
+                    message: 'Login is successful'
+                }
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.isLoading = false;
@@ -43,21 +59,39 @@ const authSlice = createSlice({
             })
             .addCase(registerUser.pending, (state) => {
                 state.isLoading = true;
-                state.message='Registering you...'
+                state.message = {
+                    message: 'Registering you...'
+                }
             })
             .addCase(registerUser.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isError = false;
                 state.isSuccess = true;
-                state.loggedIn = true;
-                state.message='Registration is successful'
+                state.loggedIn = false;
+                state.message = {
+                    message: 'Registration is successful. Please Login'
+                }
             })
             .addCase(registerUser.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
             })
+            .addCase(getAboutUser.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isError = false;
+                state.profileFetched = true;
+                state.user = action.payload.profile;
+            })
+            .addCase(getAllUsers.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isError = false;
+                state.all_profiles_fetched = true;
+                state.all_users=action.payload.profiles
+            })
     }
 })
+
+export const { reset, emptyMessage, setTokenIsThere, setTokenIsNotThere } = authSlice.actions;
 
 export default authSlice.reducer;

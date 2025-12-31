@@ -64,7 +64,7 @@ const login = async (req, res) => {
             return res.status(400).json({ message: "All fields are required!" });
         }
 
-        const user = User.findOne({ email });
+        const user =await User.findOne({ email });
         if (!user) {
             return res.status(404).json({ message: "User does not exist !" });
         }
@@ -73,12 +73,12 @@ const login = async (req, res) => {
         if(!isMatch)return res.status(400).json({ message: "Invalid credentials" });
 
         const token = crypto.randomBytes(32).toString("hex");
-        await User.updateOne({ id: user._id }, { token });
+        await User.updateOne({ _id: user._id },{ $set: { token } });
 
         return res.json({ token: token });
 
     } catch (error) {
-        
+        return res.status(500).json({ message: 'kuch gadbad h' });
     }
 }
 
@@ -127,7 +127,8 @@ const updateUserProfile = async (req, res) => {
 
 const getUserAndProfile = async (req, res) => {
     try {
-        const { token } = req.body;
+        const { token } = req.query;
+        // console.log(token);
         const user = await User.findOne({ token: token });
         if (!user) {
             return res.status(404).json({ message: "User not found!" });
@@ -135,7 +136,7 @@ const getUserAndProfile = async (req, res) => {
 
         const userProfile = await Profile.findOne({ userId: user._id })
             .populate('userId', 'name email username profilePicture');
-        return res.json(userProfile);
+        return res.json({ profile: userProfile });
 
     } catch (error) {
         return res.status(500).json({ message: error.message });
@@ -275,6 +276,6 @@ export {
     updateUserProfile, getUserAndProfile, 
     updateProfileData, getAllUserProfile,
     downloadProfile, sendConnectionRequest,
-    sendConnectionRequest, getMyConnectionsRequests,
+    getMyConnectionsRequests,
     whatAreMyConnections, acceptConnectionRequest
 };

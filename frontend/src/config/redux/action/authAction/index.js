@@ -20,7 +20,7 @@ export const loginUser = createAsyncThunk(
             return thunkAPI.fulfillWithValue(response.data.token);
             
         } catch (error) {
-            return thunkAPI.rejectWithValue(error.response.data)
+            return thunkAPI.rejectWithValue(error.response.message)
         }
     }
 )
@@ -29,6 +29,45 @@ export const loginUser = createAsyncThunk(
 export const registerUser = createAsyncThunk(
     'user/register',
     async (user, thunkAPI) => {
-        
+        try {
+            const request = await clientServer.post('/register', {
+                username: user.username,
+                password: user.password,
+                email: user.email,
+                name: user.name
+            })
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data);
+        }
+    }
+)
+
+export const getAboutUser = createAsyncThunk(
+    'user/getAboutUser',
+    async (user, thunkAPI) => {
+        try {
+            // console.log(user);
+            const response = await clientServer.get('/get_user_and_profile', {
+                params: {
+                    token: user.token
+                }
+            })
+            return thunkAPI.fulfillWithValue(response.data);
+
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data);
+        }
+    }
+)
+
+export const getAllUsers = createAsyncThunk(
+    'user/getAllUsers',
+    async (_, thunkAPI) => {
+        try {
+            const response = await clientServer.get('/get_all_users');
+            return thunkAPI.fulfillWithValue(response.data);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data)
+        }
     }
 )

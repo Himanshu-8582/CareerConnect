@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { commentPost, createPost, deleteCommentOfUser, deletePost, getAllPosts, getCommentByPost, incrementLikes } from "../controllers/post.controller";
+import multer from 'multer';
+import { commentPost, createPost, deleteCommentOfUser, deletePost, getAllPosts, getCommentByPost, incrementLikes } from "../controllers/post.controller.js";
 
 
 const router = Router();
