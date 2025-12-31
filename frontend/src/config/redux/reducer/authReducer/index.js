@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import { getAboutUser, getAllUsers, loginUser, registerUser } from "../../action/authAction/index.js"
 
 const initialState = {
-    user: [],
+    user: undefined,
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -87,7 +87,7 @@ const authSlice = createSlice({
                 state.isLoading = false;
                 state.isError = false;
                 state.all_profiles_fetched = true;
-                state.all_users=action.payload.profiles
+                state.all_users = action.payload.profiles;
             })
     }
 })
