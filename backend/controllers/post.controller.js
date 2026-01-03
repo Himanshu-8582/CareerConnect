@@ -62,7 +62,7 @@ export const commentPost = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const Post = await Post.findOne({
+        const post = await Post.findOne({
             _id: post_id
         });
         if (!post) {
@@ -72,7 +72,7 @@ export const commentPost = async (req, res) => {
         const comment = new Comment({
             userId: user.id,
             postId: post_id,
-            comment: commentBody
+            body: commentBody
         });
         await comment.save();
         return res.status(200).json({message: 'Comment Added'})
@@ -83,13 +83,15 @@ export const commentPost = async (req, res) => {
 }
 
 export const getCommentByPost = async (req, res) => {
-    const { post_id } = req.body;
+    const { post_id } = req.query;
     try {
         const post = await Post.findOne({ _id: post_id });
         if (!post) {
             return res.status(404).json({ message: 'Post not found' });
         }
-        return res.json({ comments: post.comments });
+
+        const comments = await Comment.find({ postId: post_id }).populate('userId', 'username name');
+        return res.json(comments.reverse() )
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
@@ -122,7 +124,7 @@ export const deleteCommentOfUser = async (req, res) => {
 export const incrementLikes = async (req, res)=>{
     const { post_id } = req.body;
     try {
-        const post = Post.findOne({ _id: post_id });
+        const post =await Post.findOne({ _id: post_id });
         if (!post) {
             return res.status(404).json({ message: 'Post not found' });
         }
