@@ -19,7 +19,7 @@ const convertUserDataTOPDF = async(userData) => {
     doc.fontSize(14).text(`Current Postion: ${userData.currentPost}`);
 
     doc.fontSize(14).text(`Past Work: `)
-    userData.pastWork.forEach((work, index) => {
+    userData.pastWorks.forEach((work, index) => {
         doc.fontSize(14).text(`Company name: ${work.company}`);
         doc.fontSize(14).text(`Position: ${workPostion}`);
         doc.fontSize(14).text(`Years: ${work.years}`);
@@ -196,7 +196,7 @@ const sendConnectionRequest = async (req, res) => {
                 connectionId: connectionUser._id
             }
         )
-        if (!existingRequest) {
+        if (existingRequest) {
             return res.status(404).json({ message: 'Request already sent' });
         }
 
@@ -214,7 +214,7 @@ const sendConnectionRequest = async (req, res) => {
 }
 
 const getMyConnectionsRequests = async (req, res) => {
-    const { token } = req.body;
+    const { token } = req.query;
     try {
         const user = await User.findOne({ token });
         if (!user) {
@@ -271,11 +271,29 @@ const acceptConnectionRequest = async (req, res) => {
     }
 }
 
+const getUserProfileAndUserBasedOnUsername = async (req, res) => {
+    const { username } = req.query;
+    try {
+        const user = await User.findOne({
+            username
+        })
+        if (!user) {
+            return res.status(404).json({message: 'User not found'})
+        }
+        const userProfile = await Profile.findOne({ userId: user._id }).populate('userId', 'name username email profilePicture');
+
+        return res.json({ 'profile': userProfile });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+}
+
 export {
     register, login, uploadProfilePicture,
     updateUserProfile, getUserAndProfile, 
     updateProfileData, getAllUserProfile,
     downloadProfile, sendConnectionRequest,
     getMyConnectionsRequests,
-    whatAreMyConnections, acceptConnectionRequest
+    whatAreMyConnections, acceptConnectionRequest,
+    getUserProfileAndUserBasedOnUsername
 };

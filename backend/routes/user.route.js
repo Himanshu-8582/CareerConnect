@@ -4,7 +4,7 @@ import {
     acceptConnectionRequest,
     downloadProfile, getAllUserProfile,
     getMyConnectionsRequests,
-    getUserAndProfile, login, register,
+    getUserAndProfile, getUserProfileAndUserBasedOnUsername, login, register,
     sendConnectionRequest,
     updateProfileData, updateUserProfile,
     uploadProfilePicture,
@@ -39,5 +39,6 @@ router.route('/user/send_connection_request').post(sendConnectionRequest);
 router.route('/user/getconnectionRequest').get(getMyConnectionsRequests);
 router.route('/user/user_connection_request').get(whatAreMyConnections);
 router.route('/user/accept_connection_request').post(acceptConnectionRequest);
+router.route('/user/get_profile_based_on_username').get(getUserProfileAndUserBasedOnUsername);
 
 export default router;
