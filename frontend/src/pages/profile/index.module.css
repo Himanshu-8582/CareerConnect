@@ -117,3 +117,83 @@
     border-radius: 10px;
     box-shadow: 10px 10px 15px rgb(173, 173, 173);
 }
+
+.profileContainer_details input{
+    outline: none;
+    border-style: none;
+    padding-inline: 10px;
+    padding-block: 9px;
+    width: fit-content;
+}
+
+.profileContainer_details textarea {
+    outline: none;
+    border: none;
+    padding-inline: 10px;
+    padding-block: 9px;
+    width: fit-content;
+    font-family: 'poppins';
+    font-size: 1rem;
+}
+
+.nameEdit{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+
+.updateProfileBtn{
+    padding-inline: 0.8rem;
+        padding-block: 0.3rem;
+        background: rgba(3, 93, 183, 0.905);
+        outline: none;
+        border: none;
+        color: white;
+        border-radius: 10px;
+        cursor: pointer;
+        width: fit-content;
+}
+
+.addWorkButton{
+    padding-inline: 1.3rem;
+    background: white;
+    padding-block: 1.2rem;
+    border: 1px dotted silver;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.commentContainer {
+    width: 100vw;
+    position: fixed;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.allCommentsContainer {
+    width: 40vw;
+    height: fit-content;
+    background: white;
+    border-radius: 10px;
+    position: relative;
+    padding: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.inputfield {
+    padding-inline: 1.8rem;
+    padding-block: 0.8rem;
+    outline: none;
+    border-radius: 10px;
+    border: 1px solid silver;
+    width: 100%;
+}
