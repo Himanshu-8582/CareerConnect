@@ -98,7 +98,7 @@ export default function Dashboard() {
                         <p style={{ paddingTop: '1.3rem' }}>{post.body}</p>
 
                         <div className={styles.singleCard_image}>
-                          <img className={styles.userProfile} src={`${BASE_URL}/${post.media}`} alt="" />
+                          {post.media!==''?<img className={styles.userProfile} src={`${BASE_URL}/${post.media}`} alt="" />:<></>}
                         </div>
 
                         <div className={styles.optionsContainer}>
