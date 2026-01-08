@@ -15,9 +15,9 @@ const MONGO_URL = process.env.MONGO_URL;
 app.use(cors());
 app.use(express.json());
 
+app.use('/uploads', express.static('uploads'));
 app.use(userRoute);
 app.use(postRoute);
-app.use(express.static('uploads'))
 
 const start = async () => {
     const connectDB = await mongoose.connect(MONGO_URL);

@@ -1,6 +1,8 @@
 const { default: axios } = require("axios");
 
-const BASE_URL = 'http://localhost:9000';
+
+let isProd =true;   // ture for production
+const BASE_URL = isProd?'https://career-connect-livid.vercel.app':'http://localhost:9000';
 export const clientServer = axios.create({
     baseURL: BASE_URL,
 })
